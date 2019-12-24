@@ -59,8 +59,10 @@
 </style>
 
 <script>
+    // 持续调用实现持续动画
     window.requestAnimFrame = function () { return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (a) { window.setTimeout(a, 1E3 / 60) } }();
 
+    //禁止选择
     document.onselectstart = function () {
         return false;
     };
