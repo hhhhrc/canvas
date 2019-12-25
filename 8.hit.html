@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>小球</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #myCanvas {
+            border: 1px solid dodgerblue;
+            box-shadow: 10px 10px 10px gray;
+            background: lightblue;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="1024" height="768"></canvas>
+</body>
+<script type="text/javascript">
+    var canvas = document.getElementById('myCanvas');
+    //获取上下文(获取对象)
+    var a = canvas.getContext('2d');
+    //创建随机函数 随机半径
+    function randomR(m, n) {
+        return Math.floor(Math.random() * (n - m + 1) + m);
+    }
+    //创建随机函数 随机颜色
+    function randomC() {
+        var r = randomR(0, 250);
+        var g = randomR(0, 250);
+        var b = randomR(0, 250);
+        var strcolor = 'rgb(' + r + ',' + g + ',' + b + ')';
+        return strcolor;
+    }
+    //小球的构造函数
+    function balls() {
+        //半径
+        this.r = randomR(5, 50);
+        this.x = randomR(this.r, canvas.width - this.r);
+        this.y = randomR(this.r, canvas.height - this.r);
+        //速度
+        this.speedX = randomR(-20, 20);
+        this.speedY = randomR(-20, 20);
+        //颜色
+        this.color = randomC();
+    }
+    //实例化
+    var arr = [];
+    for (var i = 0; i < 100; i++) {
+        var ball = new balls();
+        arr.push(ball);
+    }
+    //添加画
+    balls.prototype.draw = function () {
+        a.beginPath();
+        a.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
+        a.fillStyle = this.color;
+        a.fill();
+    }
+    //添加动
+    balls.prototype.move = function () {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x >= canvas.width - this.r) {
+            this.speedX *= -1;
+            //碰撞的时候小球变色
+            this.color = randomC();
+            //碰撞的时候背景变色
+            //              canvas.style.backgroundColor=randomC();
+        }
+        if (this.x <= this.r) {
+            this.speedX *= -1;
+            this.color = randomC();
+            //              canvas.style.backgroundColor=randomC();
+        }
+        if (this.y >= canvas.height - this.r) {
+            this.speedY *= -1;
+            this.color = randomC();
+            //              canvas.style.backgroundColor=randomC();
+        }
+        if (this.y <= this.r) {
+            this.speedY *= -1;
+            this.color = randomC();
+            //              canvas.style.backgroundColor=randomC();
+        }
+    }
+    //定时器
+    setInterval(function () {
+        a.clearRect(0, 0, canvas.width, canvas.height);
+        for (var i = 0; i < arr.length; i++) {
+            arr[i].draw();
+            arr[i].move();
+        }
+    }, 100)
+</script>
+
+</html>

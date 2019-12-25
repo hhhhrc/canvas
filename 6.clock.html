@@ -32,8 +32,8 @@
         function draw(ctx) {
             requestAnimationFrame(function step() {
                 drawDial(ctx); //绘制表盘
-                drawAllHands(ctx); //绘制时分秒针
-                requestAnimationFrame(step);
+                // drawAllHands(ctx); //绘制时分秒针
+                // requestAnimationFrame(step);
             });
         }
         /*绘制时分秒针*/
@@ -79,12 +79,12 @@
         function drawDial(ctx) {
             let pi = Math.PI;
 
-            ctx.clearRect(0, 0, 300, 300); //清除所有内容
-            ctx.save();
+            ctx.clearRect(0, 0, 300, 300); //在给定矩形内清空一个矩形：清除所有内容
+            ctx.save();//保存当前状态
 
             ctx.translate(150, 150); //一定坐标原点到原来的中心
             ctx.beginPath();
-            ctx.arc(0, 0, 148, 0, 2 * pi); //绘制圆周
+            ctx.arc(0, 0, 148, 0, 2 * pi); //绘制圆周：圆心，半径，起始结束角
             ctx.stroke();
             ctx.closePath();
 
